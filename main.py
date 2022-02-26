@@ -5,7 +5,6 @@ can = CanvasWrapper()
 cm  = CalendarManager()
 
 
-print("So it begins")
 cs = can.getUpcomingAssignments()
 for key, val in cs.items():
     if len(val) > 0:
