@@ -28,7 +28,7 @@ class CalendarManager:
                 creds.refresh(Request())
             else:
                 flow = InstalledAppFlow.from_client_secrets_file(
-                    'Calendar/credentials.json', self.SCOPES)
+                    os.environ.get('GOOGLE_APPLICATION_CREDENTIALS'), self.SCOPES)
                 creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
             with open('Calendar/token.pickle', 'wb') as token:
