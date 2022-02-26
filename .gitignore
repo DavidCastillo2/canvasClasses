@@ -189,6 +189,7 @@ var/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+.idea
 
 # Unit test / coverage reports
 htmlcov/
