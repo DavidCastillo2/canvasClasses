@@ -1,6 +1,13 @@
 from Calendar.CalendarManager import CalendarManager
 from Canvas.CanvasWrapper import CanvasWrapper
+from DiscordBot.theBot import MyBot
 
+
+b = MyBot(command_prefix="!")
+b.begin()
+
+
+'''
 can = CanvasWrapper()
 cm  = CalendarManager()
 
@@ -16,4 +23,5 @@ for key, val in cs.items():
 
 
 cm.updateCalendar(can.getUpcomingAssignments())
+'''
 
