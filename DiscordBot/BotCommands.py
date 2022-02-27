@@ -10,11 +10,11 @@ class classCommands(commands.Cog):
         self.checkClasses.start()
 
 
-    @tasks.loop(seconds=600.0)
+    # TODO this actually reads the dictionary incorrectly
+    @tasks.loop(seconds=3.0)
     async def checkClasses(self):
         upcoming, haventSeen = self.canvas.getUpcomingAssignments()
         for courseID in haventSeen.keys():
-            print(len(haventSeen))
             for ass in haventSeen[courseID]:
                 courseName = self.canvas.getCourseName(ass)
                 await self.postNewAssignment(courseName, ass)

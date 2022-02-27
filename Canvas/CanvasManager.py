@@ -28,19 +28,17 @@ class CanvasManager:
     def removePastAssignments(self):
         retVal = {}
         now = datetime.now()
-        for courseID, assignmentName in self.seen.items():
-            asses = self.seen[courseID][assignmentName]
-            for ass in asses:
+        for courseID in self.seen.keys():
+            for ass in self.seen[courseID].values():
                 if ass.due_at is None:
                     continue
-                dueTime = datetime(year=int(ass.due_at[0:4]), month=int(ass.due_at[5:7]), day=int(ass.due_at[8:10]),
-                                   hour=int(ass.due_at[11:13]), minute=int(ass.due_at[14:16]), second=int(ass.due_at[17:19]))
+                dueTime = ass.due_at
                 if dueTime > now:
                     try:
                         retVal[courseID]
                     except KeyError:
                         retVal[courseID] = {}
-                    retVal[courseID][assignmentName] = ass
+                    retVal[courseID][ass.name] = ass
         return retVal
 
 

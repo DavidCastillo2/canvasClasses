@@ -2,7 +2,7 @@ from Calendar.CalendarManager import CalendarManager
 from Canvas.CanvasWrapper import CanvasWrapper
 from DiscordBot.theBot import MyBot
 
-testing = True
+testing = False
 
 
 if not testing:
