@@ -11,7 +11,7 @@ class classCommands(commands.Cog):
 
 
     # TODO this actually reads the dictionary incorrectly
-    @tasks.loop(seconds=3.0)
+    @tasks.loop(seconds=7200.0)
     async def checkClasses(self):
         upcoming, haventSeen = self.canvas.getUpcomingAssignments()
         for courseID in haventSeen.keys():
