@@ -8,16 +8,19 @@ from Canvas.CanvasWrapper import CanvasWrapper
 class CanvasManager:
     def __init__(self):
         self.can = CanvasWrapper()
+        self.cm  = CalendarManager()
         self.seen = {}
         self.lastChecked = None
         self.checkIntervalHrs = 2
         return
 
 
+    # This also updates Google Calendar. Probably should separate
     def getUpcomingAssignments(self, clean=True):
         if self.lastChecked is None or (self.lastChecked - time.time_ns()) / 1000000000 / 60 / 60 > self.checkIntervalHrs:
             self.lastChecked = time.time_ns()
             upcoming = self.can.getUpcomingAssignments()
+            self.cm.updateCalendar(upcoming)
             unSeen = self._getUnseenAssignments(upcoming)
             if len(unSeen) > 0:
                 return upcoming, sortIntoCourses(unSeen)
