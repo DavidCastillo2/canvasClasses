@@ -1,6 +1,16 @@
 from discord.ext import commands, tasks
+import discord
 
 from Canvas.CanvasManager import CanvasManager
+
+
+async def shouldPost(assignment, channel):
+    async for m in channel.history(limit=20):
+        for e in m.embeds:
+            if e.description.find(assignment.name) != -1:
+                # Message has already been posted. Don't send again.
+                return False
+    return True
 
 
 class classCommands(commands.Cog):
@@ -9,8 +19,18 @@ class classCommands(commands.Cog):
         self.canvas = CanvasManager()
         self.checkClasses.start()
 
+    @commands.command()
+    async def delete(self, ctx):
+        toDelete = []
+        for guild in self.bot.guilds:
+            for channel in guild.text_channels:
+                async for m in channel.history(limit=20):
+                    if m.author.bot:
+                        toDelete.append(m)
+        for m in toDelete:
+            await m.delete()
 
-    # TODO this actually reads the dictionary incorrectly
+
     @tasks.loop(seconds=7200.0)
     async def checkClasses(self):
         upcoming, haventSeen = self.canvas.getUpcomingAssignments()
@@ -27,13 +47,22 @@ class classCommands(commands.Cog):
                 channelFirstWord = channel.name.split('-')[0]
                 for word in courseName.lower().split(' '):
                     if word.find(channelFirstWord) != -1:
-                        print("Channel Found!")
+
+                        print("\tChannel Found!")
+                        if not await shouldPost(assignment, channel):
+                            print("\tMessage Already Exists. Not Posting")
+                            return
+
                         dueDate = assignment.due_at.strftime('%m/%d/%Y\t%H:%M:%S')
-                        message = '```%s has a NEW assigment!\n\t' \
-                                  'Course Title:\t%s\n\n\t' \
-                                  'Name   :\t%s\n\t' \
-                                  'DueDate:\t%s\n\t' \
-                                  'URL    :\t%s\n```' % (
-                                      word, courseName, assignment.name, dueDate, assignment.html_url
-                                  )
-                        await channel.send(message)
+                        embed = discord.Embed(
+                            title='%s has a NEW assigment!' % word,
+                            url=assignment.html_url,
+                            description='```Course Title:\n\t%s\n\n\t'
+                                        'Name   :\t%s\n\t'
+                                        'DueDate:\t%s\n\t```' % (
+                                            courseName.replace('\n', ''), assignment.name, dueDate
+                                        ),
+                            color=discord.Colour.gold()
+                        )
+                        await channel.send(embed=embed)
+

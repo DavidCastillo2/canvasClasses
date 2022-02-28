@@ -10,7 +10,7 @@ class CanvasManager:
         self.can = CanvasWrapper()
         self.seen = {}
         self.lastChecked = None
-        self.checkIntervalHrs = 6
+        self.checkIntervalHrs = 2
         return
 
 
