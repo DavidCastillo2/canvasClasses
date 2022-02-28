@@ -48,6 +48,12 @@ class CanvasWrapper:
                 return course.name
         return None
 
+    def getCourseNameByID(self, iD):
+        for courseID, course in self.courses.items():
+            if courseID == iD:
+                return course.name
+        return None
+
 
 def hardcodedFuckCanvas(retVal):
     toRemove = [6569, 6560]

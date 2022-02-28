@@ -15,12 +15,19 @@ class CanvasManager:
         return
 
 
+    def updateGoogleCalendar(self, assignments):
+        newAsses = {}
+        for courseID, assList in assignments.items():
+            newAsses[self.getCourseNameByID(courseID)] = assList
+
+        self.cm.updateCalendar(newAsses)
+        return
+
     # This also updates Google Calendar. Probably should separate
     def getUpcomingAssignments(self, clean=True):
         if self.lastChecked is None or (self.lastChecked - time.time_ns()) / 1000000000 / 60 / 60 > self.checkIntervalHrs:
             self.lastChecked = time.time_ns()
             upcoming = self.can.getUpcomingAssignments()
-            self.cm.updateCalendar(upcoming)
             unSeen = self._getUnseenAssignments(upcoming)
             if len(unSeen) > 0:
                 return upcoming, sortIntoCourses(unSeen)
@@ -75,6 +82,9 @@ class CanvasManager:
 
     def getCourseName(self, assignment):
         return self.can.getCourseName(assignment)
+
+    def getCourseNameByID(self, iD):
+        return self.can.getCourseNameByID(iD)
 
 
 def sortIntoCourses(assignments):
