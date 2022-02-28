@@ -28,6 +28,8 @@ class Event:
 
 
 def convertAssignmentTime(assignmentTime):
+    if isinstance(assignmentTime, datetime):
+        return assignmentTime
     return datetime(year=int(assignmentTime[0:4]), month=int(assignmentTime[5:7]),
                     day=int(assignmentTime[8:10]), hour=int(assignmentTime[11:13]),
                     minute=int(assignmentTime[14:16]), second=int(assignmentTime[17:19]))

@@ -19,6 +19,8 @@ class CanvasManager:
         newAsses = {}
         for courseID, assList in assignments.items():
             newAsses[self.getCourseNameByID(courseID)] = assList
+            for ass in assList:
+                ass
 
         self.cm.updateCalendar(newAsses)
         return
