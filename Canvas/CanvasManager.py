@@ -29,6 +29,7 @@ class CanvasManager:
             self.lastChecked = time.time_ns()
             upcoming = self.can.getUpcomingAssignments()
             unSeen = self._getUnseenAssignments(upcoming)
+            self.updateGoogleCalendar(upcoming)
             if len(unSeen) > 0:
                 return upcoming, sortIntoCourses(unSeen)
         return self.removePastAssignments(), {}
