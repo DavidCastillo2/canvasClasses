@@ -1,4 +1,5 @@
 import discord
+import os
 from discord.ext import commands, tasks
 
 from DiscordBot.BotCommands import classCommands
@@ -8,7 +9,7 @@ class MyBot(commands.Bot):
 
     def __init__(self, command_prefix="!", **options):
         super().__init__(command_prefix, **options)
-        self.key = 'OTQ3Mjg5Nzg2ODU3NzA5NjA4.YhrGXA.q5Xquo9KrvYU8VBvOPYD5UD1qcM'
+        self.key = os.getenv('BOT_KEY')
         # self.loadCogs()
 
     def begin(self):
