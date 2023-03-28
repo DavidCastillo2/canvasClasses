@@ -19,6 +19,8 @@ class CalendarManager:
         # The file token.pickle stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
+        
+        #TODO credentials deleted from Google Console since this github is now public. Will have to remake, these do not work.
         if os.path.exists('Calendar/token.pickle'):
             with open('Calendar/token.pickle', 'rb') as token:
                 creds = pickle.load(token)
