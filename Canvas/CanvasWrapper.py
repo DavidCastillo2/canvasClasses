@@ -1,12 +1,12 @@
+import os
 from datetime import datetime
-
 from canvasapi import Canvas
 
 
 class CanvasWrapper:
     def __init__(self):
         self.url = 'https://ncf.instructure.com/'
-        self.token = '8190~qIYpK4cPuUptn1g1eBgXeZl4gEq3KrWLvIj7pWMoaLRtzzvEEN36ZgqX3WZmj1my'
+        self.token = os.getenv("CANVAS_API_KEY")
         self.courses = {}
         self.c = Canvas(self.url, self.token)
         self.usUser = self.c.get_current_user()
